@@ -47,7 +47,7 @@ const FacultyPage = () => {
               </p>
 
               <p className="text-gray-400 italic">
-                Professor of Computer Science
+                Senior Professor
               </p>
             </div>
           </div>
@@ -80,7 +80,7 @@ const FacultyPage = () => {
               </p>
 
               <p className="text-gray-400 italic">
-                Associate Professor of Computer Science
+                Assistant Professor
               </p>
             </div>
           </div>

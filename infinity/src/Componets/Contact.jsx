@@ -1,156 +1,121 @@
-import React, { useState } from 'react';
-import emailjs from '@emailjs/browser';
-import dept from '../assets/dept.png';
-import { Mail, MapPin } from "lucide-react";
+import React from "react";
+import dept from "../assets/dept.png";
+import { Mail, MapPin, Phone } from "lucide-react";
+import InstagramLogoWhite from "../assets/InstagramLogoWhite.png";
+import LinkedInLogoWhite from "../assets/LinkedInLogoWhite.png";
 
 const ContactPage = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    feedback: ''
-  });
-
-  const [status, setStatus] = useState({
-    message: '',
-    isError: false
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus({ message: 'Sending...', isError: false });
-
-    try {
-      const result = await emailjs.send(
-        'service_7fcwm9t',
-        'template_w017kga',
-        {
-          from_email: formData.email,
-          message: formData.feedback,
-        },
-        '-LHwwQdcUgiE6iZ2T'
-      );
-
-      if (result.text === 'OK') {
-        setStatus({ message: 'Message sent successfully!', isError: false });
-        setFormData({ email: '', feedback: '' });
-      }
-    } catch {
-      setStatus({
-        message: 'Failed to send message.',
-        isError: true
-      });
-    }
-  };
-
   return (
-    <section className="relative z-10 min-h-screen text-white px-6 py-24">
+    <section className="relative z-10 py-32 px-6 text-white">
       <div className="max-w-6xl mx-auto">
 
-        {/* Title */}
-        <div className="text-center mb-20">
-          <h1 className="text-4xl md:text-6xl font-bold">
+        {/* Section Header */}
+        <div className="text-center mb-24">
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-tight">
             <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
-              Get In Touch
+              Visit Us
             </span>
-          </h1>
-          <p className="text-gray-400 mt-4">
-            Have questions or suggestions? We'd love to hear from you.
-          </p>
+          </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-16 items-start">
+        {/* Grid */}
+        <div className="grid md:grid-cols-2 gap-20 items-center">
 
-          {/* Left Section */}
-          <div className="space-y-10">
+          {/* LEFT — Image */}
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-3xl blur-lg opacity-60 group-hover:opacity-90 transition duration-500"></div>
 
-            <div className="relative overflow-hidden rounded-2xl">
-              <img src={dept} alt="Department" className="w-full rounded-2xl" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div className="relative overflow-hidden rounded-3xl border border-white/10">
+              <img
+                src={dept}
+                alt="CSE Department"
+                className="w-full object-cover transition duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+            </div>
+          </div>
+
+          {/* RIGHT — Contact Card */}
+          <div className="bg-white/[0.03] backdrop-blur-2xl 
+                          border border-white/[0.08] 
+                          p-12 rounded-3xl 
+                          space-y-10">
+
+            {/* Phone */}
+            <div className="flex items-start gap-5">
+              <Phone className="text-blue-400 mt-1" size={22} />
+              <div>
+                <h4 className="text-sm uppercase tracking-widest text-gray-500 mb-2">
+                  Contact
+                </h4>
+                <p className="text-gray-300 leading-relaxed">
+                  Nikheth — 9666854509<br />
+                  Sujay — 7337338499
+                </p>
+              </div>
             </div>
 
-            {/* Contact Info Glass Card */}
-            <div className="bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] p-8 rounded-2xl space-y-6">
-
-              <div className="flex items-center gap-4 text-gray-300">
-                <Mail className="text-blue-400" size={22} />
+            {/* Email */}
+            <div className="flex items-start gap-5">
+              <Mail className="text-blue-400 mt-1" size={22} />
+              <div>
+                <h4 className="text-sm uppercase tracking-widest text-gray-500 mb-2">
+                  Email
+                </h4>
                 <a
                   href="mailto:infinity@uceou.edu"
-                  className="hover:text-blue-400 transition"
+                  className="text-gray-300 hover:text-blue-400 transition"
                 >
                   infinity@uceou.edu
                 </a>
               </div>
+            </div>
 
-              <div className="flex items-center gap-4 text-gray-300">
-                <MapPin className="text-blue-400" size={22} />
+            {/* Location */}
+            <div className="flex items-start gap-5">
+              <MapPin className="text-blue-400 mt-1" size={22} />
+              <div>
+                <h4 className="text-sm uppercase tracking-widest text-gray-500 mb-2">
+                  Location
+                </h4>
                 <a
                   href="https://www.google.com/maps/search/?api=1&query=Department+of+Computer+Science+Engineering+UCE+OU"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-blue-400 transition"
+                  className="text-gray-300 hover:text-blue-400 transition"
                 >
                   Department of Computer Science Engineering<br />
-                  UCE OU
+                  University College of Engineering, Osmania University
                 </a>
               </div>
-
             </div>
-          </div>
 
-          {/* Right Section - Form */}
-          <div className="bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] p-8 rounded-2xl">
+            {/* Social Links */}
+            <div className="pt-6 border-t border-white/10">
+              <h4 className="text-sm uppercase tracking-widest text-gray-500 mb-5">
+                Follow Us
+              </h4>
 
-            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="flex gap-8">
+                <a
+                  href="https://www.instagram.com/infinity_uceou?igsh=cTJuNm94dHpwNXpk"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="opacity-70 hover:opacity-100 transition duration-300"
+                >
+                  <img src={InstagramLogoWhite} className="h-7 w-7" alt="Instagram" />
+                </a>
 
-              <div>
-                <label className="block mb-2 text-gray-400">Email Address</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-black/40 border border-white/20 rounded-lg p-4 focus:outline-none focus:border-blue-400 transition"
-                  placeholder="Enter your email"
-                />
+                <a
+                  href="https://www.linkedin.com/in/infinity-uceou-41a8943b0/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="opacity-70 hover:opacity-100 transition duration-300"
+                >
+                  <img src={LinkedInLogoWhite} className="h-7 w-7" alt="LinkedIn" />
+                </a>
               </div>
-
-              <div>
-                <label className="block mb-2 text-gray-400">Your Message</label>
-                <textarea
-                  name="feedback"
-                  value={formData.feedback}
-                  onChange={handleChange}
-                  required
-                  className="w-full bg-black/40 border border-white/20 rounded-lg p-4 h-40 focus:outline-none focus:border-blue-400 transition"
-                  placeholder="Write your message..."
-                />
-              </div>
-
-              {status.message && (
-                <div className={`text-sm ${status.isError ? 'text-red-400' : 'text-green-400'}`}>
-                  {status.message}
-                </div>
-              )}
-
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 
-                           hover:from-blue-600 hover:to-cyan-600 
-                           text-white font-semibold py-4 rounded-lg 
-                           transition shadow-lg"
-              >
-                Send Message
-              </button>
-
-            </form>
+            </div>
 
           </div>
 

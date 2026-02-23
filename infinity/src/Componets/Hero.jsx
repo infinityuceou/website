@@ -1,17 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
   const navigate = useNavigate();
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center px-6 text-white">
 
-      <div className="text-center max-w-4xl">
+      <div
+        className={`text-center max-w-4xl transition-all duration-1000 ${
+          loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+        }`}
+      >
 
-        {/* Small Overline */}
-        <p className="text-gray-400 tracking-[0.3em] uppercase text-xs md:text-sm mb-6">
-          Department of Computer Science Engineering, UCEOU
+        {/* Overline */}
+        <p className="text-gray-400 tracking-[0.35em] uppercase text-xs md:text-sm mb-8">
+          Department of Computer Science Engineering · UCEOU
         </p>
 
         {/* Main Title */}
@@ -22,17 +31,17 @@ const Hero = () => {
         </h1>
 
         {/* Subtitle */}
-        <p className="mt-6 text-lg md:text-xl text-gray-300 font-light">
+        <p className="mt-8 text-lg md:text-2xl text-gray-300 font-light tracking-wide">
           National Level Technical Symposium
         </p>
 
         {/* Date */}
-        <p className="mt-2 text-gray-400 text-base md:text-lg">
-          March 12 & 13
+        <p className="mt-4 text-gray-400 text-base md:text-lg">
+          March 12 & 13, 2026
         </p>
 
-        {/* CTA Buttons */}
-        <div className="mt-12 flex justify-center gap-6 flex-wrap">
+        {/* CTA */}
+        <div className="mt-14 flex justify-center gap-8 flex-wrap">
 
           <button
             onClick={() => navigate("/events")}
@@ -60,7 +69,6 @@ const Hero = () => {
         </div>
 
       </div>
-
     </section>
   );
 };

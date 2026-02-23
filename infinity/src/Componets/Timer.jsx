@@ -72,7 +72,6 @@ const CountdownTimer = () => {
 
   const [prevTimeLeft, setPrevTimeLeft] = useState(timeLeft);
 
-  // ✅ UPDATED DATE (March 12, 2026 midnight)
   const targetDate = new Date("2026-03-12T09:00:00").getTime();
 
   useEffect(() => {
@@ -80,24 +79,30 @@ const CountdownTimer = () => {
       const now = new Date().getTime();
       const difference = targetDate - now;
 
-      if (difference > 0) {
-        setPrevTimeLeft(timeLeft);
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / 1000 / 60) % 60),
-          seconds: Math.floor((difference / 1000) % 60),
-        });
-      } else {
+      if (difference <= 0) {
+        setPrevTimeLeft(prev => prev);
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
       }
+
+      const newTime = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+
+      setTimeLeft(prev => {
+        setPrevTimeLeft(prev);
+        return newTime;
+      });
     };
 
     calculateTimeLeft();
     const timer = setInterval(calculateTimeLeft, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft]);
+  }, []); // ✅ Runs only once
 
   return (
     <section className="relative py-28 px-6 bg-transparent text-white">

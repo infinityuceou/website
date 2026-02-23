@@ -1,30 +1,48 @@
-import React from 'react'
-import Hero from '../Componets/Hero'
-import About from '../Componets/About'
-import Timer from '../Componets/Timer'
-import Tim from '../Componets/Timeline'
-import Faculty from '../Componets/Faculty'
-import Gal from '../Componets/Gallery'
-import ContactPage from '../Componets/Contact'
-import PassSection from '../Componets/PassSection'
+import React from 'react';
+
+import Hero from '../Componets/Hero';
+import About from '../Componets/About';
+import Timer from '../Componets/Timer';
+import Tim from '../Componets/Timeline';
+import Faculty from '../Componets/Faculty';
+import Gal from '../Componets/Gallery';
+import ContactPage from '../Componets/Contact';
+import FadeInSection from '../Componets/FadeInSection';
 
 const Home = () => {
   return (
-    <div className="relative min-h-screen overflow-x-hidden">
+    <div className="relative">
 
-      {/* All content sits above global StarsCanvas from App.jsx */}
-      <div className="relative z-10">
-        <Hero />
+      {/* Hero stays immediate (no fade wrapper) */}
+      <Hero />
+
+      {/* Smooth reveal sections */}
+      <FadeInSection>
         <About />
+      </FadeInSection>
+
+      <FadeInSection>
         <Timer />
+      </FadeInSection>
+
+      <FadeInSection>
         <Tim />
+      </FadeInSection>
+
+      <FadeInSection>
         <Faculty />
+      </FadeInSection>
+
+      <FadeInSection>
         <Gal />
+      </FadeInSection>
+
+      <FadeInSection>
         <ContactPage />
-      </div>
+      </FadeInSection>
 
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

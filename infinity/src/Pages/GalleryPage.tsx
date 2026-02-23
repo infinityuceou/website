@@ -106,10 +106,11 @@ const GalleryPage: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.3 }}
+            onClick={closeModal}   // 👈 Click outside closes
           >
 
-            {/* Close */}
+            {/* Close Button */}
             <button
               onClick={closeModal}
               className="absolute top-6 right-6 text-white hover:text-blue-400 transition"
@@ -117,21 +118,25 @@ const GalleryPage: React.FC = () => {
               <X size={28} />
             </button>
 
-            {/* Left */}
+            {/* Left Arrow */}
             <button
-              onClick={prev}
+              onClick={(e) => {
+                e.stopPropagation();  // 👈 Prevent backdrop close
+                prev();
+              }}
               className="absolute left-6 text-white hover:text-blue-400 transition"
             >
               <ChevronLeft size={40} />
             </button>
 
-            {/* Image */}
+            {/* Image Container */}
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.25 }}
               className="max-h-[85vh] max-w-[90vw] flex flex-col items-center"
+              onClick={(e) => e.stopPropagation()}   // 👈 Prevent close when clicking image
             >
               <img
                 src={images[activeIndex]}
@@ -144,9 +149,12 @@ const GalleryPage: React.FC = () => {
               </div>
             </motion.div>
 
-            {/* Right */}
+            {/* Right Arrow */}
             <button
-              onClick={next}
+              onClick={(e) => {
+                e.stopPropagation();  // 👈 Prevent backdrop close
+                next();
+              }}
               className="absolute right-6 text-white hover:text-blue-400 transition"
             >
               <ChevronRight size={40} />
