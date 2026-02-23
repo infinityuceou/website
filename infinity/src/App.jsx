@@ -6,6 +6,7 @@ import Events from './Pages/Events';
 import Pass from './Pages/Pass';
 import Gallery from './Pages/GalleryPage';
 import Workshop from './Pages/Live';
+import WIP from './Pages/WIP'
 
 import Navbar from './Componets/Navbar';
 import Foot from './Componets/Footer';
@@ -34,6 +35,7 @@ const App = () => {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/workshop" element={<Workshop />} />
             <Route path="/pass" element={<Pass />} />
+            <Route path="/wip" element={<WIP />} />
           </Routes>
 
           <Foot />
