@@ -3,7 +3,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
 import * as random from "maath/random";
 
-const StarBackground = (props: any) => {
+const StarBackground = () => {
   const ref = useRef<any>();
 
   const [sphere] = useState(() =>
@@ -23,7 +23,6 @@ const StarBackground = (props: any) => {
         positions={sphere}
         stride={3}
         frustumCulled
-        {...props}
       >
         <PointMaterial
           transparent
@@ -40,7 +39,7 @@ const StarBackground = (props: any) => {
 
 const StarsCanvas = () => {
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none">
+    <div className="fixed inset-0 -z-10 pointer-events-none">
       <Canvas
         camera={{ position: [0, 0, 1] }}
         gl={{
@@ -49,7 +48,10 @@ const StarsCanvas = () => {
           powerPreference: "high-performance",
         }}
         dpr={[1, 2]}
-        style={{ background: "transparent" }}
+        style={{
+          background: "transparent",
+          pointerEvents: "none",   // 🔥 critical safety layer
+        }}
       >
         <StarBackground />
       </Canvas>

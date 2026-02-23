@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from './Pages/Home'
 import Events from './Pages/Events'
+import Pass from './Pages/Pass'
 import Gallery from './Pages/GalleryPage'
 import Workshop from './Pages/Live'
 
@@ -12,15 +13,13 @@ import StarsCanvas from './Componets/StarsCanvas'
 
 const App = () => {
   return (
-    <div className="relative bg-black min-h-screen overflow-x-hidden">
+    <Router>
+      <div className="relative bg-black min-h-screen overflow-x-hidden">
 
-      {/* Global Star Background */}
-      <div className="fixed inset-0 z-0">
+        {/* Global Stars */}
         <StarsCanvas />
-      </div>
 
-      <div className="relative z-10">
-        <Router>
+        <div className="relative z-10">
           <Navbar />
 
           <Routes>
@@ -28,14 +27,15 @@ const App = () => {
             <Route path="/events" element={<Events />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/workshop" element={<Workshop />} />
+            <Route path="/pass" element={<Pass />} />
           </Routes>
 
           <Foot />
-        </Router>
-      </div>
+        </div>
 
-    </div>
+      </div>
+    </Router>
   )
 }
 
-export default App
+export default App;
