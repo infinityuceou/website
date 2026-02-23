@@ -7,7 +7,7 @@ const teamMembers = [
     id: 1,
     name: "Prabakaran S",
     image: Karan,
-    linkedin: "https://www.linkedin.com/in/prabakaran-s-b3aab9164/"
+    github: "https://github.com/s-praba-karan"
   }
 ];
 
@@ -62,7 +62,7 @@ const Footer: FC = () => {
             {teamMembers.map((member) => (
               <a
                 key={member.id}
-                href={member.linkedin}
+                href={member.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-3"
