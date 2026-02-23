@@ -10,51 +10,52 @@ const Navbar = () => {
     setIsOpen(false);
   }, [location.pathname]);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  // Clean Public Navigation
   const navItems = [
     { path: "/", label: "Home" },
     { path: "/events", label: "Events" },
-    { path: "/gallery", label: "Gallery" },
     { path: "/workshop", label: "Workshop" },
+    { path: "/gallery", label: "Gallery" },
   ];
 
+  const isActive = (path) => location.pathname === path;
+
   return (
-    <nav className="text-white fixed w-full z-50 backdrop-blur-lg bg-black/40 border-b border-white/10">
-      <div className="max-w-screen-xl flex items-center justify-between mx-auto px-6 py-4">
+    <nav className="fixed w-full z-50 backdrop-blur-xl bg-black/50 border-b border-white/10">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between text-white">
 
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-3">
-          <img src={logo} className="h-8" alt="Logo" />
-          <span className="text-xl font-semibold tracking-wide">
+          <img src={logo} className="h-8" alt="Infinity Logo" />
+          <span className="text-lg md:text-xl font-semibold tracking-wide">
             INFINITY 2K26
           </span>
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden md:flex items-center gap-10 text-sm font-medium">
+
           {navItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
-              className={`text-sm transition ${
-                location.pathname === item.path
-                  ? "text-blue-400"
-                  : "hover:text-blue-400"
-              }`}
+              className={`relative transition duration-300 hover:text-blue-400
+                ${isActive(item.path) ? "text-blue-400" : "text-gray-300"}`}
             >
               {item.label}
+
+              {/* Active underline */}
+              {isActive(item.path) && (
+                <span className="absolute left-0 -bottom-1 w-full h-[2px] bg-blue-400 rounded-full"></span>
+              )}
             </Link>
           ))}
+
         </div>
 
         {/* Mobile Hamburger */}
         <button
-          onClick={toggleMenu}
-          className="md:hidden text-white text-2xl"
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden text-2xl"
         >
           ☰
         </button>
@@ -62,20 +63,19 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-black/90 backdrop-blur-lg border-t border-white/10 px-6 py-6 space-y-4">
+        <div className="md:hidden backdrop-blur-xl bg-black/80 border-t border-white/10 px-6 py-6 space-y-6 text-gray-300 text-lg">
+
           {navItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
-              className={`block w-full text-left py-2 transition ${
-                location.pathname === item.path
-                  ? "text-blue-400"
-                  : "hover:text-blue-400"
-              }`}
+              className={`block transition hover:text-blue-400
+                ${isActive(item.path) ? "text-blue-400" : ""}`}
             >
               {item.label}
             </Link>
           ))}
+
         </div>
       )}
     </nav>

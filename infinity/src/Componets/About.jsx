@@ -48,7 +48,7 @@ const About = () => {
 
           <div className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl py-6">
             <p className="text-sm text-gray-400">Venue</p>
-            <p className="text-xl font-semibold">UCE Campus</p>
+            <p className="text-xl font-semibold">Dept. of CSE</p>
           </div>
 
           <div className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl py-6">

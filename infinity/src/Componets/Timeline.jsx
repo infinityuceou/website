@@ -18,8 +18,8 @@ const Timeline = () => {
       title: "National Level Hackathon",
     },
     {
-      date: "March 12, 2026",
-      time: "9:30 AM – 6:00 PM",
+      date: "March 12 - 13, 2026",
+      time: "9:00 AM – 6:00 PM",
       title: "Technical Events & Fest Day",
     },
   ];

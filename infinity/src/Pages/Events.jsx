@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import ai_pictionary from '../assets/Events/ai_pictionary.png'
 import code_quest from '../assets/Events/code_quest.png'
@@ -17,8 +18,6 @@ const EventCard = ({ event }) => {
                  transition-all duration-300 hover:scale-[1.02] 
                  hover:border-blue-500/40 shadow-lg"
     >
-
-      {/* Image */}
       <div className="relative w-full aspect-[16/9] overflow-hidden">
         <img
           src={event.image}
@@ -28,7 +27,6 @@ const EventCard = ({ event }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
       </div>
 
-      {/* Content */}
       <div className="p-6">
         <h3 className="text-2xl font-semibold text-white mb-3">
           {event.name}
@@ -48,49 +46,49 @@ const EventPage = () => {
     {
       id: 1,
       name: "Drama Tec",
-      description: "A fun, team-based event where participants tackle technical concepts through charades and a rapid-fire tech question round. It's all about interactive challenges and collaboration!",
+      description: "A fun, team-based event where participants tackle technical concepts through charades and rapid-fire tech questions.",
       image: drama_tec,
     },
     {
       id: 2,
-      name: "DSA flag",
-      description: "The battle is simple – two teams, multiple flags, and DSA challenges! The goal? Capture the most flags before time runs out.",
+      name: "DSA Flag",
+      description: "Capture the most flags by solving DSA challenges before time runs out.",
       image: dsa_flag,
     },
     {
       id: 3,
       name: "Infyhunt",
-      description: "An exhilarating treasure hunt where quick thinking and teamwork lead to victory!",
+      description: "An exhilarating treasure hunt where quick thinking and teamwork lead to victory.",
       image: infyhunt,
     },
     {
       id: 4,
-      name: "Code quest",
-      description: "It is a technical event that tests participants’ programming and debugging skills through two rounds: predicting the output of given code and identifying and fixing errors. It strengthens logical thinking, problem-solving, and practical coding expertise.",
+      name: "Code Quest",
+      description: "Test your programming and debugging skills through logic-based competitive rounds.",
       image: code_quest,
     },
     {
       id: 5,
-      name: "Tech rebus",
-      description: "It is an interactive technical event that tests participants’ creativity, logical thinking, and technical knowledge through image-based puzzles and logo identification challenges.",
+      name: "Tech Rebus",
+      description: "Decode image-based puzzles and technical clues using creativity and logic.",
       image: tech_rebus,
     },
     {
       id: 6,
       name: "AI Pictionary",
-      description: "Team members will take turns to draw the given word on the board, the remaining players have to compete against an AI Bot to guess what's being drawn. Points are given to the team if they are able to guess before the AI can!",
+      description: "Compete against an AI bot to guess drawings before it does.",
       image: ai_pictionary,
     },
     {
       id: 7,
       name: "Escape Room",
-      description: "An exciting, tech-themed escape room event where participants solve a series of puzzles and challenges based on technology-related questions. Each correct answer unlocks a new clue, guiding them through different scenarios. The participant who successfully answers all questions and escapes is declared the winner.",
+      description: "Solve tech-themed puzzles and unlock clues to escape before time runs out.",
       image: escape_room,
     },
     {
       id: 8,
       name: "Tech Bingo",
-      description: "It is an individual technical game that combines traditional Bingo with computer science concepts, testing participants’ technical knowledge, speed, and accuracy through a 5×5 grid of technical clues.",
+      description: "A technical spin on bingo with computer science-based clues.",
       image: tech_bingo,
     },
   ];
@@ -108,11 +106,41 @@ const EventPage = () => {
         </p>
       </div>
 
-      {/* Grid */}
+      {/* Event Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
         {events.map(event => (
           <EventCard key={event.id} event={event} />
         ))}
+      </div>
+
+      {/* Infinity Pass Section */}
+      <div className="max-w-6xl mx-auto mt-28">
+
+        <div className="bg-white/[0.04] backdrop-blur-md 
+                        border border-blue-500/30 rounded-2xl 
+                        p-12 text-center
+                        shadow-[0_0_40px_rgba(59,130,246,0.15)]">
+
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
+              Infinity Pass
+            </span>
+          </h2>
+
+          <p className="text-gray-300 max-w-2xl mx-auto mb-6 text-lg leading-relaxed">
+            Access all technical events at INFINITY 2K26 with one unified pass.
+            Designed for participants who want to experience everything.
+          </p>
+
+          <p className="text-blue-400 font-semibold text-lg mb-4">
+            Price: To Be Announced Soon
+          </p>
+
+          <p className="text-gray-500 text-sm">
+            Pass registration will open once pricing details are finalized.
+          </p>
+
+        </div>
       </div>
 
     </div>
