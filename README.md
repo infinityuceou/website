@@ -1,6 +1,14 @@
 INFINITY 2K26 🚀
 ================
 
+<p align="center">
+
+![React](https://img.shields.io/badge/React-18-blue?logo=react)
+![Vite](https://img.shields.io/badge/Vite-5-purple?logo=vite)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3-38bdf8?logo=tailwindcss)
+
+</p>
+
 Official website for **INFINITY 2K26** — A National Level Technical Symposium conducted by the **Department of Computer Science Engineering, University College of Engineering, Osmania University**.
 
 Designed with a modern, minimal, and premium glass-themed UI system.
