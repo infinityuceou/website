@@ -1,113 +1,224 @@
-import React from "react";
-import { Calendar, IndianRupee, MapPin, BookOpen, Clock } from "lucide-react";
+import React, { useState } from "react";
 
-const WorkshopPage = () => {
+const Live = () => {
+  const [loading, setLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    college: "",
+    phone: "",
+    email: "",
+    age: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const loadRazorpay = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  const handlePayment = async () => {
+    const { name, college, phone, email, age } = formData;
+
+    if (!name || !college || !phone || !email || !age) {
+      alert("Please fill all details before proceeding.");
+      return;
+    }
+
+    setLoading(true);
+
+    const sdkLoaded = await loadRazorpay();
+
+    if (!sdkLoaded) {
+      alert("Razorpay SDK failed to load.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/create-order", {
+        method: "POST",
+      });
+
+      const order = await response.json();
+
+      if (!order.id) {
+        throw new Error("Order creation failed");
+      }
+
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: order.amount,
+        currency: order.currency,
+        name: "INFINITY 2K26",
+        description: "Agentic AI Workshop",
+        order_id: order.id,
+
+        handler: function (response) {
+          alert("Payment successful! 🎉");
+          console.log("Payment Response:", response);
+          console.log("Student Details:", formData);
+        },
+
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          contact: formData.phone,
+        },
+
+        theme: {
+          color: "#2563eb",
+        },
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong. Try again.");
+    }
+
+    setLoading(false);
+  };
+
   return (
-    <div className="relative z-10 min-h-screen text-white px-6 py-24">
+    <section className="relative z-10 min-h-screen text-white px-6 py-28">
+      <div className="max-w-5xl mx-auto text-center">
 
-      {/* Header */}
-      <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4">
+        {/* Title */}
+        <h1 className="text-4xl md:text-6xl font-bold mb-6">
           <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
             How Modern AI Actually Works
           </span>
         </h1>
 
-        <p className="text-lg md:text-xl text-gray-400 italic">
-          And Where It Is Going Next
+        <p className="text-gray-400 text-lg mb-12">
+          And where it is going next
         </p>
-      </div>
 
-      {/* Info Cards */}
-      <div className="max-w-6xl mx-auto grid sm:grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-
-        {/* Date */}
-        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 text-center">
-          <Calendar className="mx-auto mb-3 text-blue-400" />
-          <p className="text-gray-300">March 2 & 3</p>
-        </div>
-
-        {/* Time */}
-        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 text-center">
-          <Clock className="mx-auto mb-3 text-blue-400" />
-          <p className="text-gray-300">10:00 AM – 4:00 PM</p>
-        </div>
-
-        {/* Venue */}
-        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 text-center">
-          <MapPin className="mx-auto mb-3 text-blue-400" />
-          <p className="text-gray-300">Seminar Hall, CSE Dept</p>
-        </div>
-
-        {/* Fee */}
-        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 text-center">
-          <IndianRupee className="mx-auto mb-3 text-blue-400" />
-          <p className="text-gray-300">₹899 Registration Fee</p>
-        </div>
-
-      </div>
-
-      {/* Description */}
-      <div className="max-w-4xl mx-auto mb-16 text-center">
-        <p className="text-gray-300 text-lg leading-relaxed">
-          A powerful 2-day hands-on workshop designed to give you a real competitive edge in the AI-driven world.
-          <br /><br />
-          Understand how modern AI systems like ChatGPT actually work — from Machine Learning and Neural Networks to Transformers, Large Language Models, RAG systems, and AI Agents.
-          <br /><br />
-          This workshop prepares you to think, build, and grow with AI — a skill every future engineer must have.
-        </p>
-      </div>
-
-      {/* Day Breakdown */}
-      <div className="max-w-6xl mx-auto mb-20">
-        <div className="grid md:grid-cols-2 gap-8">
-
-          {/* Day 1 */}
-          <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8">
-            <h2 className="text-2xl font-semibold mb-6 text-blue-400">
-              Day 1 — Foundations of Modern AI
-            </h2>
-            <ul className="space-y-4 text-gray-300">
-              <li className="flex items-center gap-3">
-                <BookOpen className="w-5 h-5 text-blue-400" />
-                Evolution of Machine Learning
-              </li>
-              <li className="flex items-center gap-3">
-                <BookOpen className="w-5 h-5 text-blue-400" />
-                Neural Networks & Transformers
-              </li>
-              <li className="flex items-center gap-3">
-                <BookOpen className="w-5 h-5 text-blue-400" />
-                How Large Language Models Work
-              </li>
-            </ul>
+        {/* Info Cards */}
+        <div className="grid md:grid-cols-3 gap-8 mb-16">
+          <div className="bg-white/[0.04] backdrop-blur-md border border-white/10 rounded-2xl p-6">
+            <h3 className="text-xl font-semibold mb-3">📅 Dates</h3>
+            <p className="text-gray-400">March 2 & 3</p>
           </div>
 
-          {/* Day 2 */}
-          <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8">
-            <h2 className="text-2xl font-semibold mb-6 text-blue-400">
-              Day 2 — The Future of AI Systems
-            </h2>
-            <ul className="space-y-4 text-gray-300">
-              <li className="flex items-center gap-3">
-                <BookOpen className="w-5 h-5 text-blue-400" />
-                Retrieval-Augmented Generation (RAG)
-              </li>
-              <li className="flex items-center gap-3">
-                <BookOpen className="w-5 h-5 text-blue-400" />
-                AI Agents & Autonomous Systems
-              </li>
-              <li className="flex items-center gap-3">
-                <BookOpen className="w-5 h-5 text-blue-400" />
-                Building Your First AI-Powered Application
-              </li>
-            </ul>
+          <div className="bg-white/[0.04] backdrop-blur-md border border-white/10 rounded-2xl p-6">
+            <h3 className="text-xl font-semibold mb-3">⏰ Time</h3>
+            <p className="text-gray-400">10:00 AM – 4:00 PM</p>
+          </div>
+
+          <div className="bg-white/[0.04] backdrop-blur-md border border-white/10 rounded-2xl p-6">
+            <h3 className="text-xl font-semibold mb-3">📍 Venue</h3>
+            <p className="text-gray-400">Seminar Hall, CSE Department</p>
+          </div>
+        </div>
+
+        {/* Description */}
+        <div className="bg-white/[0.04] backdrop-blur-md border border-white/10 rounded-2xl p-10 text-left max-w-4xl mx-auto mb-16">
+          <p className="text-gray-300 leading-relaxed mb-6">
+            A powerful 2-day hands-on workshop designed to give you a real competitive edge
+            in the AI-driven world.
+          </p>
+
+          <p className="text-gray-300 leading-relaxed mb-6">
+            Understand how modern AI systems like ChatGPT actually work —
+            from Machine Learning and Transformers to RAG and AI Agents —
+            and learn how to build with them confidently.
+          </p>
+
+          <p className="text-gray-300 leading-relaxed">
+            This workshop prepares you to think, build, and grow with AI —
+            a skill every future engineer must have.
+          </p>
+        </div>
+
+        {/* Registration Form */}
+        <div className="bg-white/[0.04] backdrop-blur-md border border-white/10 rounded-2xl p-10 max-w-4xl mx-auto mb-16 text-left space-y-6">
+
+          <h3 className="text-2xl font-semibold text-white mb-4 text-center">
+            Workshop Registration
+          </h3>
+
+          <div className="grid md:grid-cols-2 gap-6">
+
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              onChange={handleChange}
+              className="bg-black/40 border border-white/20 rounded-lg p-4 focus:outline-none focus:border-blue-400"
+            />
+
+            <input
+              type="text"
+              name="college"
+              placeholder="College Name"
+              onChange={handleChange}
+              className="bg-black/40 border border-white/20 rounded-lg p-4 focus:outline-none focus:border-blue-400"
+            />
+
+            <input
+              type="tel"
+              name="phone"
+              placeholder="Phone Number"
+              onChange={handleChange}
+              className="bg-black/40 border border-white/20 rounded-lg p-4 focus:outline-none focus:border-blue-400"
+            />
+
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              onChange={handleChange}
+              className="bg-black/40 border border-white/20 rounded-lg p-4 focus:outline-none focus:border-blue-400"
+            />
+
+            <input
+              type="number"
+              name="age"
+              placeholder="Age"
+              onChange={handleChange}
+              className="bg-black/40 border border-white/20 rounded-lg p-4 focus:outline-none focus:border-blue-400 md:col-span-2"
+            />
+
           </div>
 
         </div>
+
+        {/* Price + Button */}
+        <div className="text-center">
+          <p className="text-2xl font-semibold text-white mb-6">
+            Workshop Fee: ₹899
+          </p>
+
+          <button
+            onClick={handlePayment}
+            disabled={loading}
+            className="px-10 py-4 rounded-full 
+            bg-gradient-to-r from-blue-600 to-purple-600
+            hover:from-blue-700 hover:to-purple-700
+            transition transform hover:scale-105
+            text-white font-semibold shadow-xl"
+          >
+            {loading ? "Processing..." : "Register Now"}
+          </button>
+        </div>
+
       </div>
-    </div>
+    </section>
   );
 };
 
-export default WorkshopPage;
+export default Live;
