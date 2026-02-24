@@ -1,0 +1,186 @@
+import React from "react";
+import { Link } from "react-router-dom";
+
+const Hackathon = () => {
+  const timeline = [
+    {
+      time: "9:00 AM – 9:30 AM",
+      title: "Inauguration",
+      desc: "Welcome address, introduction to the hackathon theme, and official launch.",
+    },
+    {
+      time: "9:30 AM – 10:00 AM",
+      title: "Problem Statement Briefing",
+      desc: "Explanation of domains, rules, evaluation criteria, and mentor allocation.",
+    },
+    {
+      time: "10:00 AM – 1:00 PM",
+      title: "Hacking Session – 1",
+      desc: "Team brainstorming, architecture planning, development begins, and mentor interactions.",
+    },
+    {
+      time: "1:00 PM – 1:45 PM",
+      title: "Lunch Break",
+      desc: "Recharge and prepare for the final stretch of innovation.",
+    },
+    {
+      time: "1:45 PM – 3:30 PM",
+      title: "Hacking Session – 2",
+      desc: "Feature development, debugging, testing, and final implementation.",
+    },
+    {
+      time: "3:30 PM – 4:00 PM",
+      title: "Final Submission & Preparation",
+      desc: "Code submission and preparation for project demonstration.",
+    },
+    {
+      time: "4:00 PM – 4:45 PM",
+      title: "Project Demonstrations & Judging",
+      desc: "Live demos evaluated on innovation, technical depth, feasibility, and impact.",
+    },
+    {
+      time: "4:45 PM – 5:00 PM",
+      title: "Valedictory & Prize Distribution",
+      desc: "Announcement of winners, certificate distribution, and closing ceremony.",
+    },
+  ];
+
+  return (
+    <section className="relative z-10 min-h-screen text-white px-6 py-28">
+      <div className="max-w-6xl mx-auto">
+
+        {/* HERO */}
+        <div className="text-center mb-24">
+          <h1 className="text-5xl md:text-7xl font-extrabold leading-[1.1] mb-6">
+            <span className="bg-gradient-to-r from-purple-500 via-blue-500 to-cyan-400 text-transparent bg-clip-text">
+              INFINITY 2K26 Hackathon
+            </span>
+          </h1>
+
+          <h2 className="text-2xl md:text-3xl text-cyan-300 font-semibold tracking-wide mb-6">
+            8-Hour Innovation Sprint
+          </h2>
+
+          <p className="text-gray-400 max-w-2xl mx-auto leading-relaxed mt-6">
+            A high-intensity student-led hackathon bringing together innovative minds
+            to solve real-world challenges through collaboration,
+            rapid prototyping, and technical execution.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-8 mt-10 text-gray-300 text-lg">
+            <span>📅 March 7</span>
+            <span>⏰ 9:00 AM – 5:00 PM</span>
+            <span>📍 Department of CSE</span>
+          </div>
+        </div>
+
+        {/* EVENT HIGHLIGHTS */}
+        <div className="grid md:grid-cols-3 gap-8 mb-24">
+          <div className="bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+            <h3 className="text-xl font-semibold text-blue-400 mb-3">
+              🧑‍🤝‍🧑 Team Based
+            </h3>
+            <p className="text-gray-400">
+              Collaborate, design, and build scalable innovative solutions
+              within a fast-paced, competitive environment.
+            </p>
+          </div>
+
+          <div className="bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+            <h3 className="text-xl font-semibold text-cyan-400 mb-3">
+              ⚡ Rapid Prototyping
+            </h3>
+            <p className="text-gray-400">
+              Transform ideas into functional working prototypes
+              in just 8 focused hours.
+            </p>
+          </div>
+
+          <div className="bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-2xl p-8">
+            <h3 className="text-xl font-semibold text-purple-400 mb-3">
+              🏆 Competitive Evaluation
+            </h3>
+            <p className="text-gray-400">
+              Projects judged on innovation, feasibility,
+              technical depth, and real-world impact.
+            </p>
+          </div>
+        </div>
+
+        {/* TIMELINE TITLE */}
+        <div className="mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
+            Event Timeline
+          </h2>
+        </div>
+
+        {/* VERTICAL TIMELINE */}
+        <div className="relative max-w-4xl mx-auto mb-28">
+
+          {/* Vertical Line */}
+          <div className="absolute left-5 top-0 bottom-0 w-1 
+                          bg-gradient-to-b from-blue-500 to-cyan-400 
+                          rounded-full">
+          </div>
+
+          <div className="space-y-14 pl-16">
+            {timeline.map((item, index) => (
+              <div key={index} className="relative">
+
+                {/* Timeline Dot with Soft Glow */}
+                <div className="absolute -left-14 top-1 w-6 h-6 
+                                bg-blue-500 rounded-full 
+                                shadow-[0_0_25px_rgba(59,130,246,0.6)]
+                                ring-4 ring-blue-500/20
+                                border border-cyan-400">
+                </div>
+
+                <p className="text-cyan-400 font-semibold text-sm tracking-wide">
+                  {item.time}
+                </p>
+
+                <h3 className="text-xl md:text-2xl font-semibold mt-2 mb-2">
+                  {item.title}
+                </h3>
+
+                <p className="text-gray-400 leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* REGISTRATION CTA */}
+        <div className="text-center mb-12">
+          <div className="bg-white/[0.05] backdrop-blur-xl border border-white/10 rounded-3xl p-12 max-w-3xl mx-auto">
+
+            <h3 className="text-3xl font-semibold mb-4">
+              Registrations Opening Soon
+            </h3>
+
+            <p className="text-gray-400 mb-8">
+              Official registration details will be announced shortly.
+              Stay tuned and start preparing your team.
+            </p>
+
+            <Link
+              to="/wip"
+              className="inline-block px-12 py-4 rounded-full
+                         bg-gradient-to-r from-blue-600 to-purple-600
+                         hover:from-blue-700 hover:to-purple-700
+                         transition transform hover:scale-[1.03]
+                         text-white font-semibold shadow-xl"
+            >
+              Register Now
+            </Link>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+};
+
+export default Hackathon;
