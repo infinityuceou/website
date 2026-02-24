@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import ai_pictionary from '../assets/Events/ai_pictionary.png'
 import code_quest from '../assets/Events/code_quest.png'
@@ -46,13 +45,13 @@ const EventPage = () => {
     {
       id: 1,
       name: "Drama Tec",
-      description: "A fun, team-based event where participants tackle technical concepts through charades and rapid-fire tech questions.",
+      description: "A fun, team-based event where participants tackle technical concepts through charades and a rapid-fire tech question round.",
       image: drama_tec,
     },
     {
       id: 2,
       name: "DSA Flag",
-      description: "Capture the most flags by solving DSA challenges before time runs out.",
+      description: "Two teams compete through DSA challenges to capture the most flags before time runs out.",
       image: dsa_flag,
     },
     {
@@ -64,31 +63,31 @@ const EventPage = () => {
     {
       id: 4,
       name: "Code Quest",
-      description: "Test your programming and debugging skills through logic-based competitive rounds.",
+      description: "Predict outputs, debug code, and strengthen problem-solving skills through technical challenges.",
       image: code_quest,
     },
     {
       id: 5,
       name: "Tech Rebus",
-      description: "Decode image-based puzzles and technical clues using creativity and logic.",
+      description: "Solve creative image-based technical puzzles that test your logic and tech knowledge.",
       image: tech_rebus,
     },
     {
       id: 6,
       name: "AI Pictionary",
-      description: "Compete against an AI bot to guess drawings before it does.",
+      description: "Draw and compete against an AI Bot to guess the word faster than the machine!",
       image: ai_pictionary,
     },
     {
       id: 7,
       name: "Escape Room",
-      description: "Solve tech-themed puzzles and unlock clues to escape before time runs out.",
+      description: "Solve technology-themed puzzles and escape before time runs out.",
       image: escape_room,
     },
     {
       id: 8,
       name: "Tech Bingo",
-      description: "A technical spin on bingo with computer science-based clues.",
+      description: "Traditional Bingo meets computer science through technical clues on a 5×5 grid.",
       image: tech_bingo,
     },
   ];
@@ -102,43 +101,52 @@ const EventPage = () => {
           Infinity Events
         </h1>
         <p className="text-gray-400 max-w-xl mx-auto">
-          Discover the curated competitions and experiences awaiting you at INFINITY 2K26.
+          Discover the curated technical competitions awaiting you at INFINITY 2K26.
         </p>
       </div>
 
-      {/* Event Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+      {/* Events Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl mx-auto mb-32">
         {events.map(event => (
           <EventCard key={event.id} event={event} />
         ))}
       </div>
 
-      {/* Infinity Pass Section */}
-      <div className="max-w-6xl mx-auto mt-28">
-
-        <div className="bg-white/[0.04] backdrop-blur-md 
-                        border border-blue-500/30 rounded-2xl 
-                        p-12 text-center
+      {/* Event Pass Section */}
+      <div className="max-w-5xl mx-auto">
+        <div className="bg-white/[0.05] backdrop-blur-xl 
+                        border border-blue-500/20 
+                        rounded-3xl p-12 text-center
                         shadow-[0_0_40px_rgba(59,130,246,0.15)]">
 
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
-              Infinity Pass
-            </span>
+          <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
+            INFINITY Event Pass
           </h2>
 
-          <p className="text-gray-300 max-w-2xl mx-auto mb-6 text-lg leading-relaxed">
-            Access all technical events at INFINITY 2K26 with one unified pass.
-            Designed for participants who want to experience everything.
+          <p className="text-gray-300 text-lg mb-4">
+            Get access to all technical events conducted during INFINITY 2K26.
           </p>
 
-          <p className="text-blue-400 font-semibold text-lg mb-4">
-            Price: To Be Announced Soon
+          <p className="text-gray-400 text-sm mb-6">
+            *Hackathon registration is separate.
           </p>
 
-          <p className="text-gray-500 text-sm">
-            Pass registration will open once pricing details are finalized.
+          <p className="text-3xl font-semibold text-white mb-8">
+            ₹150
           </p>
+
+          <a
+            href="https://forms.gle/2JnfS87PfzhzD9RQ9"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-12 py-4 rounded-full
+                       bg-gradient-to-r from-blue-600 to-purple-600
+                       hover:from-blue-700 hover:to-purple-700
+                       transition transform hover:scale-[1.03]
+                       text-white font-semibold shadow-xl"
+          >
+            Register for Event Pass
+          </a>
 
         </div>
       </div>

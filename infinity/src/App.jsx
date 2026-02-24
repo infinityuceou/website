@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from './Pages/Home'
 import Events from './Pages/Events'
 import Workshop from './Pages/Live'
-import Hackathon from './Pages/Hackathon'
 import Gallery from './Pages/GalleryPage'
 import WIP from './Pages/WIP'
 
@@ -32,7 +31,6 @@ const App = () => {
 
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/hackathon" element={<Hackathon />} />
             <Route path="/workshop" element={<Workshop />} />
             <Route path="/events" element={<Events />} />
             <Route path="/gallery" element={<Gallery />} />
