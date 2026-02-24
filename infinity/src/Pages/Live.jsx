@@ -86,12 +86,14 @@ const Live = () => {
         {/* CTA */}
         <div className="text-center">
           <Link
-            to="/wip"
+            to="https://forms.gle/wkLPtyVbCwY4dGQb8"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block px-12 py-4 rounded-full
-                       bg-gradient-to-r from-blue-600 to-purple-600
-                       hover:from-blue-700 hover:to-purple-700
-                       transition transform hover:scale-105
-                       text-white font-semibold shadow-xl"
+                      bg-gradient-to-r from-blue-600 to-purple-600
+                      hover:from-blue-700 hover:to-purple-700
+                      transition transform hover:scale-105
+                      text-white font-semibold shadow-xl"
           >
             Register Now
           </Link>
