@@ -6,6 +6,7 @@ import Events from './Pages/Events'
 import Workshop from './Pages/Live'
 import Gallery from './Pages/GalleryPage'
 import WIP from './Pages/WIP'
+import Hackathon from './Pages/Hackathon'
 
 import Navbar from './Componets/Navbar'
 import Foot from './Componets/Footer'
@@ -31,6 +32,7 @@ const App = () => {
 
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/hackathon" element={<Hackathon />} />
             <Route path="/workshop" element={<Workshop />} />
             <Route path="/events" element={<Events />} />
             <Route path="/gallery" element={<Gallery />} />
