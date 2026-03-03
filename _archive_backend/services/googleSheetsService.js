@@ -1,5 +1,5 @@
 const { google } = require("googleapis");
-
+console.log("🔥 GOOGLE SHEETS NEW VERSION ACTIVE 🔥");
 let sheetsClient = null;
 
 async function getSheetsClient() {
