@@ -13,7 +13,20 @@ const stage1Routes = require('./routes/stage1Routes');
 const stage2Routes = require('./routes/stage2Routes');
 
 const app = express();
-app.use(cors());
+
+// ✅ CORS Configuration - Allow specific origins only
+app.use(cors({
+  origin: [
+    "http://localhost:5173",      // Local Vite dev
+    "http://localhost:3000",      // Alternative local dev
+    "https://infinity2k26.com",   // Production domain
+    "https://www.infinity2k26.com" // Production domain with www
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 
 

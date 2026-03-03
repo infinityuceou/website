@@ -126,7 +126,9 @@ CLOUDINARY_API_KEY=${apiKey}
 CLOUDINARY_API_SECRET=${apiSecret}
 
 # Google API Configuration (Sheets only)
-GOOGLE_SERVICE_ACCOUNT_CREDENTIALS=${credsPath.trim()}
+# NOTE: On production (Render), prefer setting GOOGLE_SERVICE_ACCOUNT_JSON directly
+#       in the dashboard instead of using a file path.
+GOOGLE_SERVICE_ACCOUNT_JSON=${credsContent.replace(/\n/g, '\\n')}
 GOOGLE_SHEET_ID=${sheetId}
 `;
 
