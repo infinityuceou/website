@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ProblemStatementSection from "../Componets/AccessibilityBooklets";
 
 const Hackathon = () => {
   const timeline = [
@@ -114,15 +115,15 @@ const Hackathon = () => {
             </p>
           </div>
 
-          <div className="bg-white/[0.05] backdrop-blur-xl border border-white/10 rounded-2xl p-10">
+          <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-10">
             <h3 className="text-2xl font-semibold text-cyan-400 mb-4">
-              🧍 Individual Registration
+              👥 Team Rules
             </h3>
             <p className="text-gray-300 mb-3">
-              Team will be formed at help desk on the event day.
+              Teams of 1 to 3 members. Team leader is mandatory. Fixed registration fee per team.
             </p>
             <p className="text-3xl font-bold text-white">
-              ₹349 <span className="text-gray-400 text-base">per person</span>
+              ₹1000 <span className="text-gray-400 text-base">per team</span>
             </p>
           </div>
         </div>
@@ -133,9 +134,12 @@ const Hackathon = () => {
             🏆 Prize Pool
           </h3>
           <p className="text-5xl font-extrabold bg-gradient-to-r from-yellow-400 to-orange-400 text-transparent bg-clip-text">
-            ₹25,000
+            ₹15,000
           </p>
         </div>
+
+        {/* PROBLEM STATEMENT SECTION */}
+        <ProblemStatementSection />
 
         {/* TIMELINE */}
         <div className="relative max-w-4xl mx-auto mb-24">

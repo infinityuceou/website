@@ -63,6 +63,17 @@
   }
 }
 
+/* Problem statement card animations and subtle effects */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.glow-border-hover:hover {
+  box-shadow: 0 8px 40px rgba(99,102,241,0.12);
+  border-color: transparent;
+}
+
 .card {
   padding: 2em;
 }

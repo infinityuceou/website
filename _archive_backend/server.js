@@ -8,12 +8,14 @@ const jwt = require('jsonwebtoken');
 const User = require('./models/User'); // Ensure the User model exists
 const userRoutes = require('./routes/userRoutes');
 const registrationRoutes = require('./routes/registrationRoutes');
+const hackRegistrationRoutes = require('./routes/hackRegistrationRoutes');
 const stage1Routes = require('./routes/stage1Routes');
 const stage2Routes = require('./routes/stage2Routes');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
 
 // Ensure `uploads` directory exists
 const uploadsDir = path.join(__dirname, 'uploads');
@@ -33,6 +35,7 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/eventDB', {
 // Routes
 app.use('/api', userRoutes);
 app.use('/api', registrationRoutes);
+app.use('/api', hackRegistrationRoutes);  // hackathon registrations
 app.use('/api/stage1', stage1Routes);
 app.use('/api/stage2', stage2Routes);
 
