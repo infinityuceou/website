@@ -17,7 +17,7 @@ const isLocalHost = window.location.hostname === 'localhost' || window.location.
 
 export const API_BASE = isLocalHost
   ? 'http://localhost:5000'
-  : 'https://api.infinity2k26.com';
+  : 'https://api.infinity2k25.in';
 ```
 
 ### Environment Detection
@@ -26,8 +26,8 @@ export const API_BASE = isLocalHost
 |----------|-------------|----------|
 | `localhost` | Development | `http://localhost:5000` |
 | `127.0.0.1` | Development | `http://localhost:5000` |
-| `infinity2k26.com` | Production | `https://api.infinity2k26.com` |
-| `www.infinity2k26.com` | Production | `https://api.infinity2k26.com` |
+| `infinity2k25.in` | Production | `https://api.infinity2k25.in` |
+| `www.infinity2k25.in` | Production | `https://api.infinity2k25.in` |
 
 ---
 
@@ -127,7 +127,7 @@ Ensure your backend has proper CORS setup:
 const cors = require('cors');
 
 app.use(cors({
-  origin: ['http://localhost:3000', 'https://infinity2k26.com', 'https://www.infinity2k26.com'],
+  origin: ['http://localhost:3000', 'https://infinity2k25.in', 'https://www.infinity2k25.in'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']

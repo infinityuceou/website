@@ -16,7 +16,7 @@ Designed with a modern, minimal, and premium glass-themed UI system.
 🌐 Live Website
 ---------------
 
-🔗 [https://infinity2k26.com](https://infinity2k26.com)
+🔗 [https://infinity2k25.in](https://infinity2k25.in)
 
 🧠 About The Project
 --------------------
