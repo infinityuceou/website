@@ -17,7 +17,7 @@ const isLocalHost = window.location.hostname === 'localhost' || window.location.
 
 export const API_BASE = isLocalHost
   ? 'http://localhost:5000'
-  : 'https://api.infinity2k25.in';
+  : 'http://api.infinity2k25.in';
 ```
 
 ### Environment Detection
@@ -26,8 +26,8 @@ export const API_BASE = isLocalHost
 |----------|-------------|----------|
 | `localhost` | Development | `http://localhost:5000` |
 | `127.0.0.1` | Development | `http://localhost:5000` |
-| `infinity2k25.in` | Production | `https://api.infinity2k25.in` |
-| `www.infinity2k25.in` | Production | `https://api.infinity2k25.in` |
+| `infinity2k25.in` | Production | `http://api.infinity2k25.in` |
+| `www.infinity2k25.in` | Production | `http://api.infinity2k25.in` |
 
 ---
 
