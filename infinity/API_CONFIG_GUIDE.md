@@ -10,15 +10,22 @@ The frontend now uses a **centralized, automatic API configuration** that switch
 
 ### File: `src/config/api.js`
 
-The API base URL is automatically detected based on the **hostname**:
+The API base URL is automatically detected based on the **hostname** and current protocol:
 
 ```javascript
 const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 
+// Follow the page protocol so that HTTPS pages won’t try to load HTTP resources
+const prodDomain = 'api.infinity2k25.in';
+const prodProtocol = window.location.protocol === 'https:' ? 'https' : 'http';
+const prodUrl = `${prodProtocol}://${prodDomain}`;
+
 export const API_BASE = isLocalHost
   ? 'http://localhost:5000'
-  : 'http://api.infinity2k25.in';
+  : prodUrl;
 ```
+
+> **Note:** if you serve the frontend over HTTPS, your backend must also support HTTPS to avoid mixed-content blocking.
 
 ### Environment Detection
 
