@@ -26,15 +26,16 @@ export default function PaymentPage(){
         .then(list=>{
           const reg = list.find(r=>r.registrationId===registrationId);
           if(reg){
-            setAmount(reg.payment.amount);
-            setQrUrl(`${API_BASE}/${reg.payment.qrCodePath}`);
-          }
-        });
-    }
-  },[registrationId]);
-
-  const onDrop = (e) => {
-    e.preventDefault();
+            // ensure displayed amount matches current pricing logic
+            const computed =
+              reg.registrationType === "individual"
+                ? 349
+                : reg.teamSize === 2
+                ? 698
+                : reg.teamSize === 3
+                ? 999
+                : 999;
+            setAmount(computed);
     const f = e.dataTransfer.files[0]; if (f) setFile(f);
   };
 

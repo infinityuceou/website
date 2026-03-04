@@ -337,42 +337,56 @@ const WIP = () => {
     try {
       let size = parseInt(teamSize);
       if (registrationType === 'individual') size = 1;
-      // build member list where first element is leader followed by any filled extra members
-      const populatedExtras = [];
-      if (size >= 2) populatedExtras.push(members[0]);
-      if (size === 3) populatedExtras.push(members[1]);
-      const payload = {
-        registrationType,
-        teamSize: size,
-        teamName,
-        members: [leader, ...populatedExtras].map((m) => ({
-          name: m.name,
-          email: m.email,
-          phone: m.phone,
-          college: m.college,
-          year: m.year,
-          branch: m.branch,
-        })),
-      };
 
-      const res = await fetch(`${API_BASE}/api/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+        // compute payment amount on frontend (individual/team2/team3)
+        const computedAmount =
+          registrationType === "individual"
+            ? 349
+            : size === 2
+            ? 698
+            : size === 3
+            ? 999
+            : 999;
+
+        // build member list where first element is leader followed by any filled extra members
+        const populatedExtras = [];
+        if (size >= 2) populatedExtras.push(members[0]);
+        if (size === 3) populatedExtras.push(members[1]);
+        const payload = {
+          registrationType,
+          teamSize: size,
+          teamName,
+          members: [leader, ...populatedExtras].map((m) => ({
+            name: m.name,
+            email: m.email,
+            phone: m.phone,
+            college: m.college,
+            year: m.year,
+            branch: m.branch,
+          })),
+          // include amount in payload for future compatibility (backend currently ignores it)
+          amount: computedAmount,
+        };
+
+        const res = await fetch(`${API_BASE}/api/register`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Registration failed");
 
       setRegistrationId(data.registrationId);
-      setAmount(data.amount);
+      // override whatever backend returned with frontend calculation
+      setAmount(computedAmount);
 
       // request generated QR (base64) from backend for consistent rendering
       try {
         const gen = await fetch(`${API_BASE}/api/generate-payment`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ registrationId: data.registrationId, amount: data.amount })
+          body: JSON.stringify({ registrationId: data.registrationId, amount: computedAmount })
         });
         const j = await gen.json();
         if (gen.ok && j.qrCode) {
@@ -465,20 +479,27 @@ const WIP = () => {
                         Individual
                       </button>
                       <button
-                        onClick={() => setRegistrationType('team')}
+                        onClick={() => {
+                          setRegistrationType('team');
+                          if (teamSize === '1') setTeamSize('2');
+                        }}
                         className={`px-4 py-2 rounded-full text-sm font-semibold ${registrationType === 'team' ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' : 'bg-white/5 text-white'}`}
                       >
                         Team
                       </button>
                     </div>
 
-                    {/* Team Size Dropdown — Only for Team mode */}
-                  {registrationType === 'team' && (
+                    {/* Team Size Dropdown — conditional options based on mode */}
+                  {(registrationType === 'team' || registrationType === 'individual') && (
                     <SelectField
                       label="Number of Team Members"
                       value={teamSize}
                       onChange={(e) => setTeamSize(e.target.value)}
-                      options={["1 Member", "2 Members", "3 Members"]}
+                      options={
+                        registrationType === 'individual'
+                          ? ["1 Member"]
+                          : ["2 Members", "3 Members"]
+                      }
                       error={errors.teamSize}
                     />
                   )}
@@ -748,7 +769,7 @@ const WIP = () => {
                     )}
 
                     <div className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-400/30 mb-4">
-                      <p className="text-sm text-gray-300">Amount: <span className="font-bold text-cyan-300">₹{amount || 1000}</span></p>
+                      <p className="text-sm text-gray-300">Amount: <span className="font-bold text-cyan-300">₹{amount ?? (registrationType === 'individual' ? 349 : size === 2 ? 698 : size === 3 ? 999 : 999)}</span></p>
                     </div>
                     <p className="text-xs text-gray-400">UPI: <span className="font-mono">einsteinellandala@okicici</span></p>
                   </div>
