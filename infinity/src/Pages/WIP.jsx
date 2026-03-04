@@ -213,6 +213,7 @@ const WIP = () => {
   const [fileError, setFileError] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [teamSize, setTeamSize] = useState("1"); // default 1 member
+  const [registrationType, setRegistrationType] = useState('team');
   const size = parseInt(teamSize) || 0; // numeric value derived from dropdown
 
   // Form State
@@ -257,6 +258,12 @@ const WIP = () => {
 
     // additional members based on team size (teamSize includes leader)
     const size = parseInt(teamSize);
+    // If individual mode, skip extra member validations
+    if (registrationType === 'individual') {
+      setErrors(e);
+      return Object.keys(e).length === 0;
+    }
+
     if (size >= 2) {
       const m = members[0];
       if (!m.name) e.member0Name = "Name required";
@@ -293,6 +300,8 @@ const WIP = () => {
       return false;
     }
     const size = parseInt(teamSize);
+    if (registrationType === 'individual') return true;
+
     if (size >= 2) {
       const m = members[0];
       if (
@@ -326,12 +335,14 @@ const WIP = () => {
     if (!validateStep1()) return;
     setLoading(true);
     try {
-      const size = parseInt(teamSize);
+      let size = parseInt(teamSize);
+      if (registrationType === 'individual') size = 1;
       // build member list where first element is leader followed by any filled extra members
       const populatedExtras = [];
       if (size >= 2) populatedExtras.push(members[0]);
       if (size === 3) populatedExtras.push(members[1]);
       const payload = {
+        registrationType,
         teamSize: size,
         teamName,
         members: [leader, ...populatedExtras].map((m) => ({
@@ -354,8 +365,26 @@ const WIP = () => {
       if (!res.ok) throw new Error(data.error || "Registration failed");
 
       setRegistrationId(data.registrationId);
-      setQrUrl(data.qrCodeUrl);
       setAmount(data.amount);
+
+      // request generated QR (base64) from backend for consistent rendering
+      try {
+        const gen = await fetch(`${API_BASE}/api/generate-payment`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ registrationId: data.registrationId, amount: data.amount })
+        });
+        const j = await gen.json();
+        if (gen.ok && j.qrCode) {
+          setQrUrl(`data:image/png;base64,${j.qrCode}`);
+        } else if (data.qrCodeUrl) {
+          setQrUrl(data.qrCodeUrl);
+        }
+      } catch (qrErr) {
+        // fallback to legacy URL
+        setQrUrl(data.qrCodeUrl);
+      }
+
       setStep(2);
     } catch (err) {
       alert("Error: " + (err.message || "Registration failed"));
@@ -427,7 +456,23 @@ const WIP = () => {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
                 >
-                  {/* Team Size Dropdown */}
+                    {/* Registration Type Toggle */}
+                    <div className="mb-4 flex gap-2">
+                      <button
+                        onClick={() => { setRegistrationType('individual'); setTeamSize('1'); }}
+                        className={`px-4 py-2 rounded-full text-sm font-semibold ${registrationType === 'individual' ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' : 'bg-white/5 text-white'}`}
+                      >
+                        Individual
+                      </button>
+                      <button
+                        onClick={() => setRegistrationType('team')}
+                        className={`px-4 py-2 rounded-full text-sm font-semibold ${registrationType === 'team' ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' : 'bg-white/5 text-white'}`}
+                      >
+                        Team
+                      </button>
+                    </div>
+
+                    {/* Team Size Dropdown */}
                   <SelectField
                     label="Number of Team Members"
                     value={teamSize}

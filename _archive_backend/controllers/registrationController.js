@@ -28,31 +28,41 @@ const transporter = nodemailer.createTransport({
 
 exports.register = async (req, res) => {
   try {
-    // team-only registration
-    const { teamName, members, teamSize } = req.body;
-    if (!teamName || !members || !teamSize) {
-      return res.status(400).json({ success: false, error: 'Missing required fields (teamName, members, teamSize)' });
+    // registration can be individual or team
+    const { teamName, members, teamSize, registrationType } = req.body;
+
+    if (!teamName || !teamSize) {
+      return res.status(400).json({ success: false, error: 'Missing required fields (teamName, teamSize)' });
     }
 
-    const size = parseInt(teamSize, 10);
+    const type = registrationType === 'individual' ? 'individual' : 'team';
+    let size = parseInt(teamSize, 10);
+
+    if (type === 'individual') {
+      // force team size to 1 for individual registrations
+      size = 1;
+    }
+
     if (![1, 2, 3].includes(size)) {
       return res.status(400).json({ success: false, error: 'teamSize must be 1, 2 or 3' });
     }
 
-    // members must be an array and have at least `size` entries
+    // members must be an array for team mode; for individual allow leader only
     const parsedMembers = Array.isArray(members) ? members : (typeof members === 'string' ? JSON.parse(members) : []);
-    if (!Array.isArray(parsedMembers) || parsedMembers.length < size) {
-      return res.status(400).json({ success: false, error: 'Members array must contain data for all team members' });
+    if (type === 'team') {
+      if (!Array.isArray(parsedMembers) || parsedMembers.length < size) {
+        return res.status(400).json({ success: false, error: 'Members array must contain data for all team members' });
+      }
     }
 
-    // Ensure leader (first member) has required fields
+    // Ensure leader (first member or provided leader info) has required fields
     const leader = parsedMembers[0];
     if (!leader || !leader.name || !leader.email || !leader.phone) {
       return res.status(400).json({ success: false, error: 'Leader must include name, email and phone' });
     }
 
-    // amount must always be fixed server-side
-    const amount = 1000;
+    // Pricing: individual fixed, team uses existing server-side price (preserve backward compatibility)
+    const amount = type === 'individual' ? 349 : 1000;
 
     const registrationId = `INFY-${uuidv4().split('-')[0].toUpperCase()}`;
 
@@ -61,10 +71,15 @@ exports.register = async (req, res) => {
     const tn = `INF2026_${registrationId}`;
     const qrText = `upi://pay?pa=${upi}&pn=${encodeURIComponent(payee)}&am=${amount}&cu=INR&tn=${tn}`;
 
+    // generate a static QR file for backward compatibility (admin email attachments etc.)
     const qrFilename = `${registrationId}.png`;
     const qrPath = path.join('uploads', 'qrcodes', qrFilename);
     const qrFullPath = path.join(qrDir, qrFilename);
-    await QRCode.toFile(qrFullPath, qrText, { type: 'png' });
+    try {
+      await QRCode.toFile(qrFullPath, qrText, { type: 'png' });
+    } catch (qrErr) {
+      console.warn('[Ctrl] Failed to write QR file (non-fatal)', qrErr.message || qrErr);
+    }
 
     const safeMembers = parsedMembers.slice(0, size).map((m) => ({
       name: m.name,
@@ -77,6 +92,7 @@ exports.register = async (req, res) => {
 
     const reg = new HackRegistration({
       registrationId,
+      registrationType: type,
       teamSize: size,
       teamName,
       members: safeMembers,
@@ -132,6 +148,28 @@ exports.register = async (req, res) => {
 };
 
 exports.uploadPaymentMiddleware = multerConfig.uploadTo(path.join('uploads', 'payments'));
+
+// Generate QR code (base64) for frontend rendering
+exports.generatePayment = async (req, res) => {
+  try {
+    const { registrationId, amount } = req.body || {};
+    if (!registrationId || !amount) return res.status(400).json({ success: false, error: 'registrationId and amount required' });
+
+    const upi = process.env.UPI_ID || 'infinity@upi';
+    const payee = process.env.PAYEE_NAME || 'INFINITY%202K26';
+    const tn = `${registrationId}`;
+    const qrText = `upi://pay?pa=${upi}&pn=${encodeURIComponent(payee)}&am=${amount}&cu=INR&tn=${tn}`;
+
+    // produce data URL
+    const dataUrl = await QRCode.toDataURL(qrText, { type: 'image/png' });
+    // strip prefix and return raw base64 string
+    const base64 = dataUrl.replace(/^data:image\/png;base64,/, '');
+    res.json({ success: true, qrCode: base64 });
+  } catch (error) {
+    console.error('Generate payment QR error', error);
+    res.status(500).json({ success: false, error: 'Internal server error' });
+  }
+};
 
 exports.uploadPayment = async (req, res) => {
   try {

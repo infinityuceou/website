@@ -142,7 +142,7 @@ const Hackathon = () => {
         <ProblemStatementSection />
 
         {/* TIMELINE */}
-        <div className="relative max-w-4xl mx-auto mb-24">
+        {/* <div className="relative max-w-4xl mx-auto mb-24">
           <h2 className="text-3xl font-bold text-center mb-16">
             Event Timeline
           </h2>
@@ -172,7 +172,7 @@ const Hackathon = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
 
         {/* CTA */}
         <div className="text-center">

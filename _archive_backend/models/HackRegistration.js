@@ -22,6 +22,7 @@ const PaymentSchema = new mongoose.Schema({
 
 const HackRegistrationSchema = new mongoose.Schema({
   registrationId: { type: String, unique: true, index: true },
+  registrationType: { type: String, enum: ['individual', 'team'], default: 'team' },
   teamSize: { type: Number, enum: [1, 2, 3], required: true },
   teamName: { type: String, required: true },
   members: { type: [MemberSchema], default: [] },
