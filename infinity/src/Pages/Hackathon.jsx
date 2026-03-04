@@ -102,16 +102,16 @@ const Hackathon = () => {
         </div>
 
         {/* REGISTRATION STRUCTURE */}
-        <div className="grid md:grid-cols-2 gap-10 mb-24">
+        <div className="grid md:grid-cols-3 gap-10 mb-24">
           <div className="bg-white/[0.05] backdrop-blur-xl border border-white/10 rounded-2xl p-10">
             <h3 className="text-2xl font-semibold text-blue-400 mb-4">
-              👥 Team Registration
+              👥 2 Member Team Registration
             </h3>
             <p className="text-gray-300 mb-3">
-              1–3 Members per Team
+              Participate as a duo and collaborate to build your solution.
             </p>
             <p className="text-3xl font-bold text-white">
-              ₹1000 <span className="text-gray-400 text-base">per team</span>
+              ₹698 <span className="text-gray-400 text-base">per team</span>
             </p>
           </div>
 
@@ -124,6 +124,18 @@ const Hackathon = () => {
             </p>
             <p className="text-3xl font-bold text-white">
               ₹349 <span className="text-gray-400 text-base">per person</span>
+            </p>
+          </div>
+
+          <div className="bg-white/[0.05] backdrop-blur-xl border border-white/10 rounded-2xl p-10">
+            <h3 className="text-2xl font-semibold text-purple-400 mb-4">
+              👥 3 Member Team Registration
+            </h3>
+            <p className="text-gray-300 mb-3">
+              Form a team of three and compete together to build innovative solutions.
+            </p>
+            <p className="text-3xl font-bold text-white">
+              ₹999 <span className="text-gray-400 text-base">per team</span>
             </p>
           </div>
         </div>
