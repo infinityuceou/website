@@ -472,27 +472,33 @@ const WIP = () => {
                       </button>
                     </div>
 
-                    {/* Team Size Dropdown */}
-                  <SelectField
-                    label="Number of Team Members"
-                    value={teamSize}
-                    onChange={(e) => setTeamSize(e.target.value)}
-                    options={["1 Member", "2 Members", "3 Members"]}
-                    error={errors.teamSize}
-                  />
+                    {/* Team Size Dropdown — Only for Team mode */}
+                  {registrationType === 'team' && (
+                    <SelectField
+                      label="Number of Team Members"
+                      value={teamSize}
+                      onChange={(e) => setTeamSize(e.target.value)}
+                      options={["1 Member", "2 Members", "3 Members"]}
+                      error={errors.teamSize}
+                    />
+                  )}
 
-                  {/* Team Name */}
-                  <InputField
-                    label="Team Name"
-                    value={teamName}
-                    onChange={(e) => setTeamName(e.target.value)}
-                    placeholder="Enter your team name"
-                    error={errors.teamName}
-                  />
+                  {/* Team Name — Only for Team mode */}
+                  {registrationType === 'team' && (
+                    <InputField
+                      label="Team Name"
+                      value={teamName}
+                      onChange={(e) => setTeamName(e.target.value)}
+                      placeholder="Enter your team name"
+                      error={errors.teamName}
+                    />
+                  )}
 
-                  {/* Leader Section */}
+                  {/* Leader Section — Team Leader for Team mode, Participant for Individual */}
                   <div className="mb-8 p-4 rounded-lg bg-white/3 border border-white/5">
-                    <h3 className="text-sm font-semibold text-gray-200 mb-4">Team Leader</h3>
+                    <h3 className="text-sm font-semibold text-gray-200 mb-4">
+                      {registrationType === 'individual' ? 'Participant Details' : 'Team Leader'}
+                    </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <InputField
                         label="Full Name"
@@ -540,7 +546,7 @@ const WIP = () => {
                     </div>
                   </div>
 
-                  {size >= 2 && (
+                  {registrationType === 'team' && size >= 2 && (
                     <>
                       {/* Member 2 Section */}
                       <motion.div
@@ -619,7 +625,7 @@ const WIP = () => {
                       </motion.div>
 
                       {/* Member 3 Section - Conditionally Rendered */}
-                      {size === 3 && (
+                      {registrationType === 'team' && size === 3 && (
                         <motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}

@@ -108,22 +108,22 @@ const Hackathon = () => {
               👥 Team Registration
             </h3>
             <p className="text-gray-300 mb-3">
-              3 Members per Team
+              1–3 Members per Team
             </p>
             <p className="text-3xl font-bold text-white">
               ₹1000 <span className="text-gray-400 text-base">per team</span>
             </p>
           </div>
 
-          <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-2xl p-10">
+          <div className="bg-white/[0.05] backdrop-blur-xl border border-white/10 rounded-2xl p-10">
             <h3 className="text-2xl font-semibold text-cyan-400 mb-4">
-              👥 Team Rules
+              👤 Individual Registration
             </h3>
             <p className="text-gray-300 mb-3">
-              Teams of 1 to 3 members. Team leader is mandatory. Fixed registration fee per team.
+              Solo Participation
             </p>
             <p className="text-3xl font-bold text-white">
-              ₹1000 <span className="text-gray-400 text-base">per team</span>
+              ₹349 <span className="text-gray-400 text-base">per person</span>
             </p>
           </div>
         </div>
@@ -180,9 +180,9 @@ const Hackathon = () => {
             <h3 className="text-3xl font-semibold mb-4">
               Ready to Build Something Big?
             </h3>
-            <p className="text-gray-400 mb-8">
+            {/* <p className="text-gray-400 mb-8">
               Registrations opening soon. Form your team now.
-            </p>
+            </p> */}
             <Link
               to="/wip"
               className="inline-block px-12 py-4 rounded-full
