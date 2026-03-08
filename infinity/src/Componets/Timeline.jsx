@@ -96,7 +96,7 @@ const Timeline = () => {
       displayDate: "March 2 - 3, 2026",
       time: "10:00 AM – 4:00 PM",
       title: "Workshop",
-      view: false,
+      view: true,
       images: [workshop1, workshop2, workshop3, workshop4, workshop5]
     },
 
