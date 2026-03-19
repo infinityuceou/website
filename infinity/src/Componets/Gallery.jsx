@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 /* ✅ New Optimized WebP Images */
-import img1 from "../assets/Gallery/SMK03347.webp";
 import img2 from "../assets/Gallery/DSC09616.webp";
 import img3 from "../assets/Gallery/DSC01643.webp";
 import img4 from "../assets/Gallery/SMK03141.webp";
@@ -10,14 +9,13 @@ import img5 from "../assets/Gallery/DSC07036.webp";
 import img6 from "../assets/Gallery/SMK02936.webp";
 import img7 from "../assets/Gallery/SMK02924.webp";
 import img8 from "../assets/Gallery/DSC01667.webp";
-import img9 from "../assets/Gallery/SMK03342.webp";
 import img10 from "../assets/Gallery/DSC09601.webp";
 import img11 from "../assets/Gallery/DSC07217.webp";
 import img12 from "../assets/Gallery/DSC07323.webp";
 import img13 from "../assets/Gallery/DSC07526.webp";
 
 const images = [
-  img1,
+ 
   img2,
   img3,
   img4,
